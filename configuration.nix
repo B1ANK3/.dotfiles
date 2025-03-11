@@ -70,6 +70,15 @@
   # Set the default editor to vim
   environment.variables.EDITOR = "vim";
 
+  # https://wiki.nixos.org/wiki/Fonts
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    fira-code
+    fira-code-symbols
+  ];
+
   networking.hostName = "jura"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

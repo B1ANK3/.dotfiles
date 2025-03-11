@@ -24,6 +24,9 @@
 	./configuration.nix
 
 	# home-manager module of nixos
+	# In future if you want to use nix on other distros
+	# migrate home-manager to a seperate module from nix
+	# then you can build with nix on eg. artix
 	home-manager.nixosModules.home-manager 
 	# This is a function
 	{

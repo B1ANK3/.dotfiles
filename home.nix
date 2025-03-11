@@ -20,10 +20,10 @@
   # '';
 
   # set cursor size and dpi for 4k monitor
-  xresources.properties = {
-    "Xcursor.size" = 16;
-    "Xft.dpi" = 172;
-  };
+  # xresources.properties = {
+  #   "Xcursor.size" = 16;
+  #   "Xft.dpi" = 172;
+  # };
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
@@ -35,7 +35,7 @@
     krita
     # obsidian # ignore 4 now
     # btop # Below
-    kitty # Change config
+    kitty-themes
     ranger
     rsync
     git # Change config
@@ -124,9 +124,14 @@
       theme = "wedisagree";
     };
 
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
+
     shellAliases = {
       la = "ls -la";
       sudo = "sudo ";
+      v = "nvim";
       rebuild = "sudo nixos-rebuild switch";
     };
 
@@ -146,6 +151,29 @@
     enable = true;
 
     settings = {};
+  };
+
+  programs.rofi = {
+    enable = true;
+  };
+
+  # https://mynixos.com/home-manager/options/programs.kitty
+  programs.kitty = {
+    enable = true;
+    # https://github.com/kovidgoyal/kitty-themes/tree/master/themes
+    themeFile = "GruvboxMaterialDarkMedium";
+
+    # For Zsh
+    shellIntegration.enableZshIntegration = true;
+
+    font = {
+      name = "Fira Code";
+      # font_family      family="Fira Code"
+      # bold_font        auto
+      # italic_font      auto
+      # bold_italic_font auto
+      size = 11;
+    };
   };
  
   # This value determines the home Manager release that your
