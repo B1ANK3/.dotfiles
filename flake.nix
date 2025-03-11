@@ -1,3 +1,4 @@
+# In future port to: https://github.com/Misterio77/nix-starter-configs
 {
   description = "Wisp's ice flake";
 

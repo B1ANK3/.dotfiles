@@ -34,13 +34,21 @@
     keepassxc
     krita
     # obsidian # ignore 4 now
-    # btop # Below
     kitty-themes
     ranger
     rsync
-    git # Change config
-    # rustup # TODO
 
+    # Devtools
+    gcc
+    gnumake
+    # llvm # TODO: Find llvm tools
+    rustup
+    pnpm # Node package manager
+    nodejs_23 # Use shell.nix for projects
+    # python # TODO: Careful with python
+
+    # Neovim clipboard
+    xsel
 
     neofetch
     nnn # terminal file manager
@@ -53,6 +61,7 @@
 
     # utils
     ripgrep # recursively searches directories for a regex pattern
+    fd # sharkdp/fd
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
     eza # A modern replacement for ‘ls’
@@ -106,12 +115,23 @@
     usbutils # lsusb
   ];
 
-  # basic configuration of git, please change to your own
-  # programs.git = {
-  #   enable = true;
-  #   userName = "Ryan Yin";
-  #   userEmail = "xiaoyin_c@qq.com";
-  # };
+  programs.git = {
+     enable = true;
+
+     userName = "B1ANK3";
+     userEmail = "44206247+B1ANK3@users.noreply.github.com";
+
+     aliases = {
+           tree = ''log --graph --decorate --pretty=oneline --abbrev-commit --all
+	count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
+	count = "! echo git ls-files | while read f; do git blame -w --line-porcelain -- \"\" | grep -I '^author '; done | sort -f | uniq -ic | sort -n"'';
+     };
+
+     extraConfig = {
+        init.defaultbranch = "main";
+        credential.helper = "cache";
+     };
+   };
 
   programs.zsh = {
     enable = true;
