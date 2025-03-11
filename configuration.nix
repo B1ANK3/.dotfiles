@@ -1,21 +1,19 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 # Following: https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-with-flakes-enabled
-
-{ config, lib, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # <home-manager/nixos>
-    ];
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
   boot = {
     loader.systemd-boot = {
       enable = true;
@@ -25,7 +23,7 @@
 
     loader.efi.canTouchEfiVariables = true;
 
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = ["ntfs"];
   };
 
   # For OBS
@@ -33,14 +31,14 @@
 
   nix = {
     gc = {
-      automatic = true;                  # Enable automatic execution of the task
-      dates = "weekly";                  # Schedule the task to run weekly
-      options = "--delete-older-than 10d";  # Specify options for the task: delete files older than 10 days
-      randomizedDelaySec = "14m";        # Introduce a randomized delay of up to 14 minutes before executing the task
+      automatic = true; # Enable automatic execution of the task
+      dates = "weekly"; # Schedule the task to run weekly
+      options = "--delete-older-than 10d"; # Specify options for the task: delete files older than 10 days
+      randomizedDelaySec = "14m"; # Introduce a randomized delay of up to 14 minutes before executing the task
     };
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
       download-buffer-size = "500000000";
     };
   };
@@ -52,7 +50,7 @@
       inherit pkgs;
     };
     # OpenGL Hardware Accel
-    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};
   };
 
   # List packages installed in system profile. To search, run:
@@ -82,10 +80,7 @@
   networking.hostName = "jura"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-  # networking.networkmanager.unmanaged = [
-  #   "*" "except:type:wwan" "except:type:gsm"
-  # ];
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Africa/Johannesburg";
@@ -105,11 +100,11 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    
+
     desktopManager = {
       xfce.enable = true;
     };
- 
+
     windowManager.awesome = {
       enable = true;
       luaModules = with pkgs.luaPackages; [
@@ -117,8 +112,8 @@
         luadbi-mysql
       ];
     };
-    
-    videoDrivers = [ "nvidia" ];
+
+    videoDrivers = ["nvidia"];
   };
   services.displayManager.sddm.enable = true;
 
@@ -129,22 +124,22 @@
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-    
+
     prime = {
       intelBusId = "PCI:0:2:0";
-      nvidiaBusId =  "PCI:1:0:0";
+      nvidiaBusId = "PCI:1:0:0";
       offload = {
         enable = true;
         enableOffloadCmd = true;
       };
     };
   };
-  # Opengl 
+  # Opengl
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
 
-    extraPackages = with pkgs; [ 
+    extraPackages = with pkgs; [
       # Hardware acceleration
       # Prefer intel vaapi over nvidia
       # https://discourse.nixos.org/t/nvidia-open-breaks-hardware-acceleration/58770/32
@@ -159,17 +154,17 @@
       libva
       libva-utils
       vpl-gpu-rt
-      
+
       # X11 + Nvidia
-      config.boot.kernelPackages.nvidia_x11 
+      config.boot.kernelPackages.nvidia_x11
     ];
     # 32bit
-    extraPackages32 = with pkgs.pkgsi686Linux; [ 
-      intel-vaapi-driver 
+    extraPackages32 = with pkgs.pkgsi686Linux; [
+      intel-vaapi-driver
     ];
   };
   # Force intel-media-driver
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
+  environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";};
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -179,8 +174,6 @@
   # services.printing.enable = true;
 
   # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
   services.pipewire = {
     enable = true;
     pulse.enable = true;
@@ -197,134 +190,13 @@
     };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     tree
-  #   ];
-  # };
+  # Define a user account
   users.users.wisp = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
     uid = 1000;
     shell = pkgs.zsh;
   };
-  # home-manager.backupFileExtension = "backup";
-  # home-manager.useGlobalPkgs = true;
-  /* home-manager.users.wisp = { pkgs, ... }: {
-    programs.zsh = {
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-
-      oh-my-zsh = {
-        enable = true;
-        theme = "wedisagree";
-      };
-
-      shellAliases = {
-        la = "ls -la";
-        sudo = "sudo ";
-        rebuild = "sudo nixos-rebuild switch";
-      };
-
-      history = {
-        size = 5000;
-        ignoreAllDups = true;
-        path = "$HOME/.zsh_history";
-      };
-    };
-
-    # Editor
-    programs.neovim = {
-      enable = true;
-    };
-
-    # Daily driver (replaces firefox)
-    programs.librewolf = {
-      enable = true;
-
-      # Extensions need to be installed manually
-
-      settings = {
-        "webgl.disabled" = false;
-	"privacy.resistFingerprinting" = false;
-	"privacy.clearOnShutdown.history" = false;
-        "privacy.clearOnShutdown.cookies" = false;
-        "network.cookie.lifetimePolicy" = 0;
-	"identitiy.fxaccounts.enabled" = true;
-      };
-    };
-
-    # Daily browser (librewolf override)
-    programs.firefox = {
-      enable = false;
-
-      profiles.wisp = {
-         
-	  id = 0;
-	  isDefault = true;		
-
-      bookmarks = [];
-
-      search.engines = {
-        "Unduck" = {
-	  urls = [{
-	    template = "https://unduck.link?q=%s";
-	    params = [{
-	      name = "query";
-	      value = "%s";
-	    }];
-	    definedAliases = [ "@ud" ];
-	  }];
-	};
-      };
-      search.force = true;
-
-      # Custom CSS
-      userChrome = '' ''; # CSS here
-
-      # Extensions from NUR
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        ublock-origin
-	darkreader
-	sponsorblock
-	tabliss
-	  return-youtube-dislikes
-	  keepassxc-browser
-    	  user-agent-string-switcher
-         ];
-	};
-    };
-
-    # Dev browser
-    # programs.ungoogled-chromium = {
-    # };
-
-    home.packages = with pkgs; [
-      # Applications
-      ungoogled-chromium
-      keepassxc
-      krita
-      obsidian
-
-      btop
-      kitty
-      ranger
-      rsync
-      git
-
-      # Development
-      # Maybe use nix.shell
-      # https://wiki.nixos.org/wiki/Rust#Installation_via_rustup
-      rustup 
-    ];
-
-    home.stateVersion = "24.11";
-  }; */
 
   # Syncthing
   services.syncthing = {
@@ -350,7 +222,6 @@
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -394,6 +265,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.11"; # Did you read the comment?
-
 }
-

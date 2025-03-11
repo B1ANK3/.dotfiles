@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   home.username = "wisp";
   home.homeDirectory = "/home/wisp";
 
@@ -70,12 +73,12 @@
     # networking tools
     mtr # A network diagnostic tool
     iperf3
-    dnsutils  # `dig` + `nslookup`
+    dnsutils # `dig` + `nslookup`
     ldns # replacement of `dig`, it provide the command `drill`
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
+    ipcalc # it is a calculator for the IPv4/v6 addresses
 
     # misc
     cowsay
@@ -98,7 +101,7 @@
     hugo # static site generator
     glow # markdown previewer in terminal
 
-    btop  # replacement of htop/nmon
+    btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
 
@@ -116,22 +119,22 @@
   ];
 
   programs.git = {
-     enable = true;
+    enable = true;
 
-     userName = "B1ANK3";
-     userEmail = "44206247+B1ANK3@users.noreply.github.com";
+    userName = "B1ANK3";
+    userEmail = "44206247+B1ANK3@users.noreply.github.com";
 
-     aliases = {
-           tree = ''log --graph --decorate --pretty=oneline --abbrev-commit --all
-	count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
-	count = "! echo git ls-files | while read f; do git blame -w --line-porcelain -- \"\" | grep -I '^author '; done | sort -f | uniq -ic | sort -n"'';
-     };
+    aliases = {
+      tree = ''        log --graph --decorate --pretty=oneline --abbrev-commit --all
+        	count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
+        	count = "! echo git ls-files | while read f; do git blame -w --line-porcelain -- \"\" | grep -I '^author '; done | sort -f | uniq -ic | sort -n"'';
+    };
 
-     extraConfig = {
-        init.defaultbranch = "main";
-        credential.helper = "cache";
-     };
-   };
+    extraConfig = {
+      init.defaultbranch = "main";
+      credential.helper = "cache";
+    };
+  };
 
   programs.zsh = {
     enable = true;
@@ -167,10 +170,78 @@
     enable = true;
   };
 
+  # Librewolf is cool but lacks sync and breaks on some sites
   programs.librewolf = {
-    enable = true;
+    enable = false;
 
     settings = {};
+  };
+
+  # Try find alt to FF because of the T&C's changed
+  programs.firefox = {
+    enable = true;
+
+    profiles.wisp = {
+      settings = {};
+
+      # Search engines
+      search.engines = {
+        "Unduck" = {
+          urls = [
+            {
+              template = "https://unduck.link";
+              params = [
+                {
+                  name = "q";
+                  value = "%s";
+                }
+              ];
+            }
+          ];
+          definedAliases = ["@ud"];
+        };
+      };
+      search.force = true;
+
+      # Extensions
+      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+        ublock-origin
+        darkreader
+        sponsorblock
+        tabliss
+        # onetab # Unfree is broken on hm
+        return-youtube-dislikes
+        keepassxc-browser
+        user-agent-string-switcher
+      ];
+    };
+    policies = {
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableFirefoxScreenshots = true;
+      FirefoxSuggest = {
+        WebSuggestions = false;
+        SponsoredSuggestions = false;
+        ImproveSuggest = false;
+      };
+
+      EnableTrackingProtection = {
+        Value = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
+
+      FirefoxHome = {
+        Search = true;
+        TopSites = false;
+        SponsoredTopSites = false;
+        Highlights = false;
+        Pocket = false;
+        SponsoredPocket = false;
+        Snippets = false;
+      };
+    };
   };
 
   programs.rofi = {
@@ -195,7 +266,7 @@
       size = 11;
     };
   };
- 
+
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
@@ -209,5 +280,3 @@
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
-
-
