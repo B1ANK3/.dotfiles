@@ -125,14 +125,21 @@
     userEmail = "44206247+B1ANK3@users.noreply.github.com";
 
     aliases = {
-      tree = ''        log --graph --decorate --pretty=oneline --abbrev-commit --all
-        	count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
-        	count = "! echo git ls-files | while read f; do git blame -w --line-porcelain -- \"\" | grep -I '^author '; done | sort -f | uniq -ic | sort -n"'';
+      tree = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
+      count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #";
+      # this is broken rn
+      count = "! echo git ls-files | while read f; do git blame -w --line-porcelain -- \"\" | grep -I '^author '; done | sort -f | uniq -ic | sort -n";
     };
 
     extraConfig = {
       init.defaultbranch = "main";
       credential.helper = "cache";
+      core = {
+        repositoryformatversion = 0;
+        filemode = true;
+        bare = false;
+        logallrefupdates = true;
+      };
     };
   };
 
@@ -145,6 +152,7 @@
     oh-my-zsh = {
       enable = true;
       theme = "wedisagree";
+      plugins = ["direnv" "git" "sudo"];
     };
 
     sessionVariables = {
@@ -156,6 +164,7 @@
       sudo = "sudo ";
       v = "nvim";
       rebuild = "sudo nixos-rebuild switch";
+      dp = "cd ~/Desktop/Programming";
     };
 
     history = {
@@ -163,6 +172,12 @@
       ignoreAllDups = true;
       path = "$HOME/.zsh_history";
     };
+  };
+
+  # Auto-env
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 
   # TODO: Link config
@@ -186,22 +201,18 @@
 
       # Search engines
       search.engines = {
+        # https://mynixos.com/home-manager/option/programs.firefox.profiles.%3Cname%3E.search.engines
         "Unduck" = {
           urls = [
             {
-              template = "https://unduck.link";
-              params = [
-                {
-                  name = "q";
-                  value = "%s";
-                }
-              ];
+              template = "https://unduck.link/?q={searchTerms}";
             }
           ];
           definedAliases = ["@ud"];
         };
       };
       search.force = true;
+      search.default = "Unduck";
 
       # Extensions
       extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
