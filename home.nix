@@ -46,6 +46,7 @@
     gnumake
     # llvm # TODO: Find llvm tools
     rustup
+    just
     pnpm # Node package manager
     nodejs_23 # Use shell.nix for projects
     # python # TODO: Careful with python
