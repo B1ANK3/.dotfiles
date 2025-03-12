@@ -105,6 +105,9 @@
       xfce.enable = true;
     };
 
+    autoRepeatDelay = 350;
+    autoRepeatInterval = 50;
+
     windowManager.awesome = {
       enable = true;
       luaModules = with pkgs.luaPackages; [
@@ -177,6 +180,8 @@
   services.pipewire = {
     enable = true;
     pulse.enable = true;
+    alsa.enable = true;
+    wireplumber.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).

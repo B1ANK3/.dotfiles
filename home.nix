@@ -7,27 +7,6 @@
   home.username = "wisp";
   home.homeDirectory = "/home/wisp";
 
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
-
-  # set cursor size and dpi for 4k monitor
-  # xresources.properties = {
-  #   "Xcursor.size" = 16;
-  #   "Xft.dpi" = 172;
-  # };
-
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
@@ -167,6 +146,9 @@
       v = "nvim";
       rebuild = "sudo nixos-rebuild switch";
       dp = "cd ~/Desktop/Programming";
+      # TODO: Open obsidian.nvim
+      notes = "cd ~/Sync/bidirectional/Thoth && NOTES_ENABLE=1 nvim";
+      md = "NOTES_ENABLE=1 nvim";
     };
 
     history = {
@@ -174,6 +156,8 @@
       ignoreAllDups = true;
       path = "$HOME/.zsh_history";
     };
+
+    # extraConfig = '''';
   };
 
   # Auto-env
