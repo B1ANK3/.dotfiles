@@ -7,10 +7,33 @@
   home.username = "wisp";
   home.homeDirectory = "/home/wisp";
 
+    # Theming
+    # https://www.youtube.com/watch?v=m_6eqpKrtxk
+  gtk = {
+        enable = true; 
+        # theme = {
+        #     name = "adw-gtk3";
+        #     package = pkgs.adw-gt3;
+        # };
+    };
+
+    qt = {
+        enable = true;
+        platformTheme = "gtk";
+        style = {
+            name = "adwaita-dark";
+            package = pkgs.adwaita-qt;
+        };
+    };
+
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
+
+    # Modules
+    # Ignore for now until better wifi
+        # (callPackage ./modules/lingo.nix {})
 
     # Own
     keepassxc
@@ -21,8 +44,9 @@
     rsync
 
     # Devtools
-    gcc
+    # gcc
     gnumake
+    llvmPackages.clangUseLLVM
     # llvm # TODO: Find llvm tools
     rustup
     just
@@ -30,6 +54,7 @@
     pnpm # Node package manager
     nodejs_23 # Use shell.nix for projects
     # python # TODO: Careful with python
+    alejandra # nix formatter
 
     # Neovim clipboard
     xsel
@@ -71,6 +96,10 @@
     gawk
     zstd
     gnupg
+
+    # Screen saver + locker
+    libnotify # Notifications to WM
+    i3lock-color
 
     # nix related
     #
@@ -149,6 +178,7 @@
       # TODO: Open obsidian.nvim
       notes = "cd ~/Sync/bidirectional/Thoth && NOTES_ENABLE=1 nvim";
       md = "NOTES_ENABLE=1 nvim";
+      fn = "printf 'Formatting nix files..\n'; alejandra *.nix;";
     };
 
     history = {
@@ -158,6 +188,23 @@
     };
 
     # extraConfig = '''';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      nix_shell = {
+        disabled = false;
+        impure_msg = "";
+        symbol = "";
+        format = "[$symbol$state]($style) ";
+      };
+      shlvl = {
+        disabled = false;
+        symbol = "λ ";
+      };
+    };
   };
 
   # Auto-env
@@ -241,6 +288,7 @@
     };
   };
 
+  # Program selector
   programs.rofi = {
     enable = true;
   };
@@ -261,6 +309,37 @@
       # italic_font      auto
       # bold_italic_font auto
       size = 11;
+    };
+  };
+
+  # Notifier
+  # https://mynixos.com/home-manager/options/services.dunst
+  services.dunst = {
+    enable = true;
+  };
+
+  services.picom = {
+    enable = true;
+    vSync = true;
+
+    # activeOpacity = 0.9;
+    # inactiveOpacity = 0.8;
+  };
+
+  # services.polybar = {
+  #   enable = true;
+  # };
+
+  # Screen Autolocking (Doesn't work for some reason)
+  # https://mynixos.com/nixpkgs/options/services.xserver.xautolock
+  # https://mynixos.com/home-manager/options/services.screen-locker
+  services.screen-locker = {
+    enable = true;
+    inactiveInterval = 10;
+    lockCmd = "${pkgs.i3lock-color}/bin/i3lock-color --blur 5";
+
+    xautolock = {
+      enable = true;
     };
   };
 

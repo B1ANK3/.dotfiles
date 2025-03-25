@@ -64,6 +64,9 @@
     ncdu
     libva-utils
     ntfs3g
+
+    # SDDM Themes
+    (callPackage ./sddm_themes/astronaut_theme.nix {}).sddm-astronaut-theme
   ];
   # Set the default editor to vim
   environment.variables.EDITOR = "vim";
@@ -101,10 +104,16 @@
   services.xserver = {
     enable = true;
 
-    desktopManager = {
-      xfce.enable = true;
-    };
+    # Switched to WM only
+    # desktopManager = {
+    #   xfce.enable = true;
+    # };
+    displayManager = {};
 
+    # Vsync
+    enableTearFree = true;
+
+    # Keypress holding (not respected by sddm)
     autoRepeatDelay = 350;
     autoRepeatInterval = 50;
 
@@ -118,7 +127,16 @@
 
     videoDrivers = ["nvidia"];
   };
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+
+    theme = "sddm-astronaut-theme";
+
+    # Because sddm doesn't respect xserver commands
+    setupScript = ''
+      xset r rate 350 50
+    '';
+  };
 
   hardware.nvidia = {
     modesetting.enable = true;
