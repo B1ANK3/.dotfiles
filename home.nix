@@ -7,24 +7,24 @@
   home.username = "wisp";
   home.homeDirectory = "/home/wisp";
 
-    # Theming
-    # https://www.youtube.com/watch?v=m_6eqpKrtxk
+  # Theming
+  # https://www.youtube.com/watch?v=m_6eqpKrtxk
   gtk = {
-        enable = true; 
-        # theme = {
-        #     name = "adw-gtk3";
-        #     package = pkgs.adw-gt3;
-        # };
-    };
+    enable = true;
+    # theme = {
+    #     name = "adw-gtk3";
+    #     package = pkgs.adw-gt3;
+    # };
+  };
 
-    qt = {
-        enable = true;
-        platformTheme = "gtk";
-        style = {
-            name = "adwaita-dark";
-            package = pkgs.adwaita-qt;
-        };
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt;
     };
+  };
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
@@ -33,7 +33,7 @@
 
     # Modules
     # Ignore for now until better wifi
-        # (callPackage ./modules/lingo.nix {})
+    # (callPackage ./modules/lingo.nix {})
 
     # Own
     keepassxc
