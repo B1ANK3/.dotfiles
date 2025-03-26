@@ -42,6 +42,7 @@
     kitty-themes
     ranger
     rsync
+    vesktop
 
     # Devtools
     # gcc
