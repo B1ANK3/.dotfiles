@@ -131,11 +131,6 @@
     enable = true;
 
     theme = "sddm-astronaut-theme";
-
-    # Because sddm doesn't respect xserver commands
-    setupScript = ''
-      xset r rate 350 50
-    '';
   };
 
   hardware.nvidia = {
@@ -210,6 +205,9 @@
     };
     touchpad = {
       accelProfile = "flat";
+      naturalScrolling = true;
+      tapping = true;
+      tappingDragLock = true;
     };
   };
 
@@ -220,23 +218,6 @@
     uid = 1000;
     shell = pkgs.zsh;
   };
-
-  # Syncthing
-  services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
-    settings = {
-      gui = {
-        user = "wisp";
-        password = "nixos";
-      };
-
-      folders = {
-        # Use the gui
-      };
-    };
-  };
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
 
   # programs.firefox.enable = true;
   programs.zsh.enable = true;

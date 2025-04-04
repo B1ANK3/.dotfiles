@@ -43,6 +43,7 @@
     ranger
     rsync
     vesktop
+    arandr
 
     # Devtools
     # gcc
@@ -128,6 +129,11 @@
     pciutils # lspci
     usbutils # lsusb
   ];
+
+  # Set key input delay
+  xsession.initExtra = ''
+    xset r rate 350 50
+  '';
 
   programs.git = {
     enable = true;
@@ -342,6 +348,11 @@
     xautolock = {
       enable = true;
     };
+  };
+
+  # Syncthing
+  services.syncthing = {
+    enable = true;
   };
 
   # This value determines the home Manager release that your
