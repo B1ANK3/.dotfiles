@@ -7,6 +7,12 @@
   home.username = "wisp";
   home.homeDirectory = "/home/wisp";
 
+# Extra paths to add to $PATH 
+    home.sessionPath = [
+# PNPM bin dir
+    "$HOME/.pnpm"
+    ];
+
   # Theming
   # https://www.youtube.com/watch?v=m_6eqpKrtxk
   gtk = {
@@ -174,6 +180,8 @@
 
     sessionVariables = {
       EDITOR = "nvim";
+      # Path for pnpm global packages
+      PNPM_HOME = "$HOME/.pnpm";
     };
 
     shellAliases = {
