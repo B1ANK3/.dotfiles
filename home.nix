@@ -350,7 +350,7 @@
   # https://mynixos.com/home-manager/options/services.screen-locker
   services.screen-locker = {
     enable = true;
-    inactiveInterval = 10;
+    inactiveInterval = 20;
     lockCmd = "${pkgs.i3lock-color}/bin/i3lock-color --blur 5";
 
     xautolock = {
