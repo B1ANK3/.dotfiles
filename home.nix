@@ -7,11 +7,11 @@
   home.username = "wisp";
   home.homeDirectory = "/home/wisp";
 
-# Extra paths to add to $PATH 
-    home.sessionPath = [
-# PNPM bin dir
+  # Extra paths to add to $PATH
+  home.sessionPath = [
+    # PNPM bin dir
     "$HOME/.pnpm"
-    ];
+  ];
 
   # Theming
   # https://www.youtube.com/watch?v=m_6eqpKrtxk
@@ -50,6 +50,7 @@
     rsync
     vesktop
     arandr
+    glpk # OpsRec tool
 
     # Devtools
     # gcc
@@ -333,13 +334,13 @@
     enable = true;
   };
 
-  services.picom = {
-    enable = true;
-    vSync = true;
+  # services.picom = {
+  # enable = true;
+  #     vSync = true;
 
-    # activeOpacity = 0.9;
-    # inactiveOpacity = 0.8;
-  };
+  # activeOpacity = 0.9;
+  # inactiveOpacity = 0.8;
+  #   };
 
   # services.polybar = {
   #   enable = true;
