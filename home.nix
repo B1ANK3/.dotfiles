@@ -334,13 +334,13 @@
     enable = true;
   };
 
-  # services.picom = {
-  # enable = true;
-  #     vSync = true;
+  services.picom = {
+    enable = true;
+    vSync = true;
 
-  # activeOpacity = 0.9;
-  # inactiveOpacity = 0.8;
-  #   };
+    # activeOpacity = 0.9;
+    # inactiveOpacity = 0.8;
+  };
 
   # services.polybar = {
   #   enable = true;
