@@ -61,7 +61,7 @@
     just
     devbox
     pnpm # Node package manager
-    nodejs_23 # Use shell.nix for projects
+    nodejs_24 # Use shell.nix for projects
     # python # TODO: Careful with python
     alejandra # nix formatter
 
@@ -264,7 +264,7 @@
       search.default = "Unduck";
 
       # Extensions
-      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+      extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
         ublock-origin
         darkreader
         sponsorblock

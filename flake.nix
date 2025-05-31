@@ -4,12 +4,12 @@
 
   inputs = {
     # Nix packages source, using offical stable branch
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     # nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       # 'follows' means home-manager uses the same packages as
       # the system to avoid problems with different packages
       inputs.nixpkgs.follows = "nixpkgs";
