@@ -108,7 +108,6 @@
 
     # Screen saver + locker
     libnotify # Notifications to WM
-    i3lock-color
 
     # nix related
     #
@@ -346,19 +345,6 @@
   #   enable = true;
   # };
 
-  # Screen Autolocking (Doesn't work for some reason)
-  # https://mynixos.com/nixpkgs/options/services.xserver.xautolock
-  # https://mynixos.com/home-manager/options/services.screen-locker
-  services.screen-locker = {
-    enable = true;
-    inactiveInterval = 20;
-    lockCmd = "${pkgs.i3lock-color}/bin/i3lock-color --blur 5";
-
-    xautolock = {
-      enable = true;
-    };
-  };
-
   # Syncthing
   services.syncthing = {
     enable = true;
@@ -372,7 +358,7 @@
   # You can update home Manager without changing this value. See
   # the home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 
   # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
