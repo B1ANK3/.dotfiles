@@ -64,6 +64,7 @@
     ncdu
     libva-utils
     ntfs3g
+    slock
 
     # SDDM Themes
     (callPackage ./sddm_themes/astronaut_theme.nix {}).sddm-astronaut-theme
