@@ -194,6 +194,8 @@
       notes = "cd ~/Sync/bidirectional/Thoth && NOTES_ENABLE=1 nvim";
       md = "NOTES_ENABLE=1 nvim";
       fn = "printf 'Formatting nix files..\n'; alejandra *.nix;";
+      # https://askubuntu.com/questions/800845/create-file-and-its-parent-directory
+      mkfile = "mkdir -p \"$(dirname \"$1\")\" && touch \"$1\"";
     };
 
     history = {
