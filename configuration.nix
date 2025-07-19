@@ -64,7 +64,6 @@
     ncdu
     libva-utils
     ntfs3g
-    slock
 
     # SDDM Themes
     (callPackage ./sddm_themes/astronaut_theme.nix {}).sddm-astronaut-theme
@@ -101,9 +100,19 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
+  # Wayland windowing system
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
+  services.displayManager.sddm.wayland.enable = true;
+  # Chromium wayland native
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   # Enable the X11 windowing system.
   services.xserver = {
-    enable = true;
+    enable = false;
 
     # Switched to WM only
     # desktopManager = {

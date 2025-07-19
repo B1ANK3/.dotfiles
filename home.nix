@@ -107,7 +107,18 @@
     gnupg
 
     # Screen saver + locker
-    libnotify # Notifications to WM
+    # libnotify # Notifications to WM
+
+    # Hyprland utilities
+    hypridle # idle daemon
+    hyprpaper # wallpaper
+    hyprpicker # color picker
+    hyprlock # screen lock
+    xdg-desktop-portal-hyprland
+    hyprsunset # light filter
+    hyprpolkitagent # auth daemon
+    hyprland-qt-support # QT windows
+    # hyprcursor # Cursor themes
 
     # nix related
     #
@@ -335,8 +346,9 @@
     enable = true;
   };
 
+  # using hyprland
   services.picom = {
-    enable = true;
+    enable = false;
     vSync = true;
 
     # activeOpacity = 0.9;
