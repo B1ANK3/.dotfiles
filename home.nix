@@ -109,7 +109,8 @@
     # Screen saver + locker
     # libnotify # Notifications to WM
 
-    # Hyprland utilities
+    # Hyprland utilities 
+    # IMPORTANT: Need to be enabled with systemctl
     hypridle # idle daemon
     hyprpaper # wallpaper
     hyprpicker # color picker
@@ -120,6 +121,11 @@
     hyprland-qt-support # QT windows
     # hyprcursor # Cursor themes
 
+    playerctl # Control for media
+
+    # Theming
+    waybar
+
     # nix related
     #
     # it provides the command `nom` works just like `nix`
@@ -129,6 +135,8 @@
     # productivity
     hugo # static site generator
     glow # markdown previewer in terminal
+    obsidian # Note taking app
+    logseq # New note taking
 
     btop # replacement of htop/nmon
     iotop # io monitoring
