@@ -147,7 +147,7 @@
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    open = false;
+    open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
@@ -182,7 +182,7 @@
       vpl-gpu-rt
 
       # X11 + Nvidia
-      config.boot.kernelPackages.nvidia_x11
+      # config.boot.kernelPackages.nvidia_x11
     ];
     # 32bit
     extraPackages32 = with pkgs.pkgsi686Linux; [
@@ -191,6 +191,9 @@
   };
   # Force intel-media-driver
   environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";};
+    environment.variables = {
+        GBM_BACKEND = "nvidia-drm";
+    };
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
