@@ -44,6 +44,10 @@
     # Own
     keepassxc
     krita
+    # Screengrab
+    grim
+    slurp
+    wl-clipboard-rs
     # obsidian # ignore 4 now
     kitty-themes
     ranger
