@@ -66,7 +66,7 @@
     ntfs3g
 
     # SDDM Themes
-    (callPackage ./sddm_themes/astronaut_theme.nix {}).sddm-astronaut-theme
+    # (callPackage ./sddm_themes/astronaut_theme.nix {}).sddm-astronaut-theme
   ];
   # Set the default editor to vim
   environment.variables.EDITOR = "vim";
@@ -106,10 +106,31 @@
     withUWSM = true;
     xwayland.enable = true;
   };
-  services.displayManager.sddm.wayland.enable = true;
+  # services.displayManager.sddm.wayland.enable = true;
   # Chromium wayland native
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # From: github.com:sjcobb2022/nixos-config/blob/main/hosts/common/optional/greetd.nix
+  services.greetd = let
+    tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  in {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${tuigreet} --time --remember --remember-session";
+        user = "greeter";
+      };
+    };
+  };
 
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal";
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
   # Enable the X11 windowing system.
   services.xserver = {
     enable = false;
@@ -137,11 +158,11 @@
 
     videoDrivers = ["nvidia"];
   };
-  services.displayManager.sddm = {
-    enable = true;
-
-    theme = "sddm-astronaut-theme";
-  };
+  # services.displayManager.sddm = {
+  #   enable = true;
+  #
+  #   theme = "sddm-astronaut-theme";
+  # };
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -191,9 +212,9 @@
   };
   # Force intel-media-driver
   environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";};
-    environment.variables = {
-        GBM_BACKEND = "nvidia-drm";
-    };
+  environment.variables = {
+    GBM_BACKEND = "nvidia-drm";
+  };
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";

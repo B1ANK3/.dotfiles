@@ -13,14 +13,12 @@
     "$HOME/.pnpm"
   ];
 
+  wayland.windowManager.hyprland.systemd.enable = false;
+
   # Theming
   # https://www.youtube.com/watch?v=m_6eqpKrtxk
   gtk = {
     enable = true;
-    # theme = {
-    #     name = "adw-gtk3";
-    #     package = pkgs.adw-gt3;
-    # };
   };
 
   qt = {
@@ -34,13 +32,6 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # here is some command line tools I use frequently
-    # feel free to add your own or remove some of them
-
-    # Modules
-    # Ignore for now until better wifi
-    # (callPackage ./modules/lingo.nix {})
-
     # Own
     keepassxc
     krita
@@ -48,7 +39,6 @@
     grim
     slurp
     wl-clipboard-rs
-    # obsidian # ignore 4 now
     kitty-themes
     ranger
     rsync
@@ -113,13 +103,14 @@
     # Screen saver + locker
     # libnotify # Notifications to WM
 
-    # Hyprland utilities 
+    # Hyprland utilities
     # IMPORTANT: Need to be enabled with systemctl
     hypridle # idle daemon
     hyprpaper # wallpaper
     hyprpicker # color picker
     hyprlock # screen lock
     xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk # Caelestia ricing
     hyprsunset # light filter
     hyprpolkitagent # auth daemon
     hyprland-qt-support # QT windows
@@ -129,6 +120,10 @@
 
     # Theming
     waybar
+    # Ricing Caelestia
+    # cliphist
+    # inotify-tools
+    # app2unit
 
     # nix related
     #
@@ -215,6 +210,7 @@
       dp = "cd ~/Desktop/Programming";
       # TODO: Open obsidian.nvim
       notes = "cd ~/Sync/bidirectional/Thoth && NOTES_ENABLE=1 nvim";
+      tst = "NVIM_APPNAME=test_config nvim";
       md = "NOTES_ENABLE=1 nvim";
       fn = "printf 'Formatting nix files..\n'; alejandra *.nix;";
       # https://askubuntu.com/questions/800845/create-file-and-its-parent-directory
@@ -245,6 +241,14 @@
         symbol = "λ ";
       };
     };
+  };
+
+  # Ricing
+  programs.quickshell = {
+    enable = true;
+    systemd.enable = true;
+    # Config is in ~/.config/quickshell
+    activeConfig = "$XDG_CONFIG_HOME/.config/quickshell";
   };
 
   # Auto-env
