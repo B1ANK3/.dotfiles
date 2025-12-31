@@ -58,6 +58,7 @@
     nodejs_24 # Use shell.nix for projects
     # python # TODO: Careful with python
     alejandra # nix formatter
+    kdePackages.qtdeclarative
 
     # Neovim clipboard
     xsel
@@ -161,18 +162,19 @@
 
   programs.git = {
     enable = true;
+    settings = {
+      user = {
+        name = "B1ANK3";
+        email = "44206247+B1ANK3@users.noreply.github.com";
+      };
 
-    userName = "B1ANK3";
-    userEmail = "44206247+B1ANK3@users.noreply.github.com";
+      alias = {
+        tree = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
+        count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #";
+        # this is broken rn
+        count = "! echo git ls-files | while read f; do git blame -w --line-porcelain -- \"\" | grep -I '^author '; done | sort -f | uniq -ic | sort -n";
+      };
 
-    aliases = {
-      tree = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-      count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #";
-      # this is broken rn
-      count = "! echo git ls-files | while read f; do git blame -w --line-porcelain -- \"\" | grep -I '^author '; done | sort -f | uniq -ic | sort -n";
-    };
-
-    extraConfig = {
       init.defaultbranch = "main";
       credential.helper = "cache";
       core = {

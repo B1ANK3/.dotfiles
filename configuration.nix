@@ -64,9 +64,7 @@
     ncdu
     libva-utils
     ntfs3g
-
-    # SDDM Themes
-    # (callPackage ./sddm_themes/astronaut_theme.nix {}).sddm-astronaut-theme
+    brightnessctl
   ];
   # Set the default editor to vim
   environment.variables.EDITOR = "vim";
@@ -75,7 +73,7 @@
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     fira-code
     fira-code-symbols
   ];
@@ -111,7 +109,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   # From: github.com:sjcobb2022/nixos-config/blob/main/hosts/common/optional/greetd.nix
   services.greetd = let
-    tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+    tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
   in {
     enable = true;
     settings = {
@@ -194,7 +192,7 @@
       intel-vaapi-driver
 
       # nvidia-vaapi-driver
-      vaapiVdpau
+      libva-vdpau-driver
       vdpauinfo
       libvdpau
       libvdpau-va-gl
