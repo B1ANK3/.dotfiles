@@ -59,6 +59,9 @@
     # python # TODO: Careful with python
     alejandra # nix formatter
     kdePackages.qtdeclarative
+    # Postman like app for testing REST apis
+    bruno
+    bruno-cli
 
     # Neovim clipboard
     xsel
