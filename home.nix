@@ -45,6 +45,7 @@
     vesktop
     arandr
     glpk # OpsRec tool
+    pavucontrol # Audio
 
     # Devtools
     # gcc
