@@ -48,13 +48,18 @@
     pavucontrol # Audio
 
     # Devtools
+    # FIXME: Move tools that are needed for neovim config into custom config
+
     # gcc
-    gnumake
-    llvmPackages.clangUseLLVM
+    # Conflicts with nix flakes
+    # gnumake
+    # llvmPackages.clangUseLLVM
     # llvm # TODO: Find llvm tools
     rustup
     just
-    devbox
+    # Haskell
+    ghc
+    # NodeJS
     pnpm # Node package manager
     nodejs_24 # Use shell.nix for projects
     # python # TODO: Careful with python
@@ -66,8 +71,14 @@
 
     # Neovim clipboard
     xsel
+    # LSPs for neovim globally
+    markdown-oxide
+    ltex-ls
+    nixd
 
-    neofetch
+    # neofetch
+    # Migrate to fastfetch
+    fastfetch
     nnn # terminal file manager
 
     # archives
@@ -95,7 +106,6 @@
     ipcalc # it is a calculator for the IPv4/v6 addresses
 
     # misc
-    cowsay
     file
     which
     tree
@@ -137,10 +147,7 @@
     nix-output-monitor
 
     # productivity
-    hugo # static site generator
-    glow # markdown previewer in terminal
     obsidian # Note taking app
-    logseq # New note taking
 
     btop # replacement of htop/nmon
     iotop # io monitoring
@@ -266,6 +273,11 @@
   # TODO: Link config
   programs.neovim = {
     enable = true;
+
+    plugins = with pkgs; [
+        # Does this even do anything here???
+        tree-sitter
+    ];
   };
 
   # Librewolf is cool but lacks sync and breaks on some sites
