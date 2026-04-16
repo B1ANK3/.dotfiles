@@ -58,16 +58,16 @@
     rustup
     just
     # Haskell
-    ghc
+    # ghc # Too big + messes with other installs
     # NodeJS
-    pnpm # Node package manager
-    nodejs_24 # Use shell.nix for projects
+    # pnpm # Node package manager
+    # nodejs_24 # Use shell.nix for projects
     # python # TODO: Careful with python
     alejandra # nix formatter
     kdePackages.qtdeclarative
     # Postman like app for testing REST apis
-    bruno
-    bruno-cli
+    # bruno
+    # bruno-cli
 
     # Neovim clipboard
     xsel
@@ -116,7 +116,7 @@
     gnupg
 
     # Screen saver + locker
-    # libnotify # Notifications to WM
+    libnotify # Notifications to WM
 
     # Hyprland utilities
     # IMPORTANT: Need to be enabled with systemctl
@@ -306,8 +306,8 @@
           definedAliases = ["@ud"];
         };
       };
-      search.force = true;
-      search.default = "Unduck";
+      search.force = false;
+      search.default = "ddg";
 
       # Extensions
       extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
@@ -348,6 +348,14 @@
         Snippets = false;
       };
     };
+  };
+
+  # Email client
+  programs.thunderbird = {
+      enable = true;
+      profiles.wisp = {
+        isDefault = true;
+      };
   };
 
   # Program selector
