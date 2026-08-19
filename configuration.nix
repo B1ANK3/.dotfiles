@@ -4,7 +4,6 @@
 # Following: https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-with-flakes-enabled
 {
   config,
-  lib,
   pkgs,
   ...
 }: {
@@ -24,6 +23,8 @@
     loader.efi.canTouchEfiVariables = true;
 
     supportedFilesystems = ["ntfs"];
+
+    kernelPackages = pkgs.linuxPackages_zen;
   };
 
   # For OBS
@@ -59,7 +60,7 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     lshw
-    fastfetchMinimal
+    fastfetch.minimal
     zsh
     ncdu
     libva-utils
@@ -129,42 +130,26 @@
     TTYVHangup = true;
     TTYVTDisallocate = true;
   };
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = false;
 
-    # Switched to WM only
-    # desktopManager = {
-    #   xfce.enable = true;
-    # };
-    displayManager = {};
+  services.blueman.enable = true;
 
-    # Vsync
-    enableTearFree = true;
-
-    # Keypress holding (not respected by sddm)
-    autoRepeatDelay = 350;
-    autoRepeatInterval = 50;
-
-    windowManager.awesome = {
-      enable = true;
-      luaModules = with pkgs.luaPackages; [
-        luarocks
-        luadbi-mysql
-      ];
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+        FastConnectable = false;
+      };
+      Policy = {
+        AutoEnable = true;
+      };
     };
-
-    videoDrivers = ["nvidia"];
   };
-  # services.displayManager.sddm = {
-  #   enable = true;
-  #
-  #   theme = "sddm-astronaut-theme";
-  # };
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true;
+    powerManagement.enable = false;
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = true;
@@ -221,8 +206,7 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  security.rtkit.enable = true; 
-  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
   # Enable sound.
   services.pipewire = {
     enable = true;
@@ -277,7 +261,7 @@
 
   # Open ports in the firewall.
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [8080];
+  networking.firewall.allowedTCPPorts = [];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

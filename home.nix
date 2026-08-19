@@ -1,7 +1,7 @@
 {
-  config,
   pkgs,
   inputs,
+  config,
   ...
 }: {
   home.username = "wisp";
@@ -114,6 +114,9 @@
     gawk
     zstd
     gnupg
+    jflap
+    # Spin root for CS
+    spin
 
     # Screen saver + locker
     libnotify # Notifications to WM
@@ -164,6 +167,9 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    # Minecraft
+    modrinth-app
   ];
 
   # Set key input delay
@@ -270,14 +276,11 @@
     nix-direnv.enable = true;
   };
 
-  # TODO: Link config
   programs.neovim = {
     enable = true;
-
-    plugins = with pkgs; [
-        # Does this even do anything here???
-        tree-sitter
-    ];
+    withPython3 = false;
+    withRuby = false;
+    withNodeJs = false;
   };
 
   # Librewolf is cool but lacks sync and breaks on some sites
@@ -290,6 +293,7 @@
   # Try find alt to FF because of the T&C's changed
   programs.firefox = {
     enable = true;
+    configPath = "${config.xdg.configHome}/.mozilla/firefox";
 
     profiles.wisp = {
       settings = {};
@@ -352,10 +356,10 @@
 
   # Email client
   programs.thunderbird = {
-      enable = true;
-      profiles.wisp = {
-        isDefault = true;
-      };
+    enable = true;
+    profiles.wisp = {
+      isDefault = true;
+    };
   };
 
   # Program selector

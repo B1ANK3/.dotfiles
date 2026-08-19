@@ -4,12 +4,12 @@
 
   inputs = {
     # Nix packages source, using offical stable branch
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     # nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       # 'follows' means home-manager uses the same packages as
       # the system to avoid problems with different packages
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,7 +43,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "bak";
+          home-manager.backupFileExtension = "baka";
 
           # user specific config
           home-manager.users.wisp = import ./home.nix;
